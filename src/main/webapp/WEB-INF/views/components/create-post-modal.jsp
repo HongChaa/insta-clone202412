@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
 <div class="modal-container" id="createPostModal" style="display: none;">
   <div class="modal-backdrop"></div>
   <button class="modal-close-button">
