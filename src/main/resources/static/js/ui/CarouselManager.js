@@ -90,8 +90,8 @@ class CarouselManager {
     this.nextBtn.style.display = index === this.slides.length - 1 ? 'none' : 'flex';
 
     // 인디케이터 변화 업데이트
-    const $inticators = [...this.indicatorContainer.children];
-    $inticators.forEach(($ind, i) => { 
+    const $indicators = [...this.indicatorContainer.children];
+    $indicators.forEach(($ind, i) => { 
       $ind.classList.toggle('active', i === index);
     });
 
