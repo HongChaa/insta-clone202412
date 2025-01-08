@@ -11,7 +11,6 @@ class HashtagSearch {
     // 디바운스를 위한 타이머변수
     this.searchTimeout = null;
 
-
   }
 
   // textarea에 input이벤트 걸기
