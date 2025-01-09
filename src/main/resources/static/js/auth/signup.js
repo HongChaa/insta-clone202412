@@ -19,10 +19,9 @@ async function fetchToSignUp(userData) {
     body: JSON.stringify(userData)
   });
 
-  const data = await response.json();
-  
   // alert(data.message);
-  window.location.href = '/'; // 로그인 페이지 이동
+  if (response.ok) window.location.href = '/'; // 로그인 페이지 이동
+  else alert(data.message);
 }
 
 
@@ -50,6 +49,14 @@ function initSignUp() {
 
   // 디바운스가 걸린 validateField 함수
   const debouncedValidate = debounce(async ($input) => {
+    // === bug fix part ===
+    /*
+      원인: validateField는 비동기(async)로 작동함 
+            따라서 await을 걸지 않으면 아래쪽 함수 updateSubmitButton과 동시에 작동되어
+            버그가 발생함
+      해결 방안: validateField에 await을 걸어 실행이 끝날때까지 updateSubmitButton이
+             호출되지 않고 대기하도록 만들어줌
+    */
     await validateField($input); // 가입버튼 활성화코드는 이 코드 이후에 실행해야 함
     updateSubmitButton($inputs, $submitButton); // 가입 버튼 활성화/비활성화 처리
   }, 700);
@@ -129,9 +136,7 @@ async function validateField($input) {
       isValid = validatePassword($formField, inputValue);
     } else if (fieldName === 'username') {
       isValid = await validateUsername($formField, inputValue);
-    } else {
-      isValid = true;
-    }
+    } 
   }
 
   // 각 input에 검사결과를 저장
