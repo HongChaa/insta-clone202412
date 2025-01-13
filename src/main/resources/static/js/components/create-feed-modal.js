@@ -1,6 +1,7 @@
 
 import CarouselManager from "../ui/CarouselManager.js";
 import HashtagSearch from "../ui/HashtagSearch.js";
+import { fetchWithAuth } from "../util/api.js";
 
 // step 모듈내에서 전역관리
 let currentStep = 1;
@@ -72,11 +73,8 @@ async function fetchFeed() {
 
   setTimeout(async () => { 
     // 서버에 POST요청 토큰을 포함시켜서 전송 
-    const response = await fetch('/api/posts', {
+    const response = await fetchWithAuth('/api/posts', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      },
       body: formData
     });
   
