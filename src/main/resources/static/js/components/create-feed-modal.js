@@ -2,6 +2,7 @@
 import CarouselManager from "../ui/CarouselManager.js";
 import HashtagSearch from "../ui/HashtagSearch.js";
 import { fetchWithAuth } from "../util/api.js";
+import { getCurrentUser } from "../util/auth.js";
 
 // step 모듈내에서 전역관리
 let currentStep = 1;
@@ -222,9 +223,23 @@ function setUpModalEvents() {
 
   const { $closeBtn, $backdrop, $backStepBtn, $nextStepBtn, $nestedModal } = elements;
 
+  // 스텝3에 로그인한 사용자 프로필사진, 이름 렌더링
+  const renderUserInfo = async () => { 
+    const { username, profileImageUrl } = await getCurrentUser();
+    const $img = document.querySelector('.write-area .profile-image img');
+    $img.src = profileImageUrl ?? '/images/default-profile.svg';
+    $img.alt = `${username}님의 프로필 사진`;
+
+    document.querySelector('.write-area .username').textContent = username;
+  };
+
   // 모달 열기 함수
   const openModal = (e) => {
     e.preventDefault();
+
+    // 로그인한 사용자 이름 렌더링
+    renderUserInfo();
+
     // 모달 열기
     $modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';  // 배경 바디 스크롤 방지
