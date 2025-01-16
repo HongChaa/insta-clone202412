@@ -51,6 +51,13 @@
             <result property="username" column="username"/>
             <result property="profileImageUrl" column="profile_image_url"/>
         </association>
+
+        <!--   내부 리스트 객체 매핑 설정   -->
+        <collection property="images" ofType="PostImage">
+            <result property="imageUrl" column="image_url" />
+            <result property="imageOrder" column="image_order" />
+        </collection>
+
     </resultMap>
 
 
@@ -74,6 +81,24 @@
         ON p.id = pi.post_id
         WHERE p.member_id = #{memberId}
         ORDER BY p.created_at DESC
+    </select>
+
+    <!--  단일 피드 1개를 조회해서 상세보기 처리  -->
+    <select id="findPostDetailById" resultMap="PostResultMap">
+        SELECT
+            p.id
+            , p.content
+            , u.username
+            , u.profile_image_url
+            , pi.image_url
+            , pi.image_order
+        FROM posts p
+            INNER JOIN users u
+                ON p.member_id = u.id
+            INNER JOIN post_images pi
+                ON p.id = pi.post_id
+        WHERE p.id = #{postId}
+        ORDER BY pi.image_order
     </select>
 
 </mapper>
