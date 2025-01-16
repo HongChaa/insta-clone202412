@@ -49,11 +49,13 @@
         <association property="member" javaType="Member">
             <id property="id" column="id"/>
             <result property="username" column="username"/>
+            <result property="name" column="name"/>
             <result property="profileImageUrl" column="profile_image_url"/>
         </association>
 
         <!--   내부 리스트 객체 매핑 설정   -->
         <collection property="images" ofType="PostImage">
+            <id property="id" column="image_id" />
             <result property="imageUrl" column="image_url" />
             <result property="imageOrder" column="image_order" />
         </collection>
@@ -88,8 +90,11 @@
         SELECT
             p.id
             , p.content
+            , p.created_at
             , u.username
             , u.profile_image_url
+            , u.name
+            , pi.id AS image_id
             , pi.image_url
             , pi.image_order
         FROM posts p
