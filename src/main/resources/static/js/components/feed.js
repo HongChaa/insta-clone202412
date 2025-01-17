@@ -76,7 +76,7 @@ function truncateContent(writer, content, maxLength = 20) {
 
 
 // 한개의 피드를 렌더링하는 함수
-function createFeedItem({ username, profileImageUrl, content, images, createdAt }) {
+function createFeedItem({ feed_id: feedId, username, profileImageUrl, content, images, createdAt }) {
 
   // const makeImageTags = (images) => { 
   //   let imgTag = '';
@@ -87,7 +87,7 @@ function createFeedItem({ username, profileImageUrl, content, images, createdAt 
   // };
 
   return `
-    <article class="post">
+    <article class="post" data-post-id="${feedId}">
       <div class="post-header">
         <div class="post-user-info">
           <div class="post-profile-image">

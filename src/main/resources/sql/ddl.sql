@@ -93,3 +93,19 @@ ALTER TABLE posts
 CREATE INDEX idx_posts_member_id ON posts (member_id);
 
 
+-- 좋아요 테이블
+CREATE TABLE post_likes
+(
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    post_id    BIGINT NOT NULL,
+    member_id  BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id) REFERENCES users (id) ON DELETE CASCADE,
+    UNIQUE KEY unique_post_member (post_id, member_id)
+);
+
+-- 인덱스 추가
+CREATE INDEX idx_post_likes_post_id ON post_likes (post_id);
+CREATE INDEX idx_post_likes_member_id ON post_likes (member_id);
