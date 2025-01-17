@@ -58,6 +58,7 @@ public class ProfileService {
     @Transactional(readOnly = true)
     public List<ProfilePostResponse> findProfilePosts(String username) {
         return postRepository.findProfilePosts(getMember(username).getId());
+
     }
 
     private Member getMember(String username) {

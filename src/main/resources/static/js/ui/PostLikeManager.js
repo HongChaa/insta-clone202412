@@ -47,6 +47,14 @@ class PostLikeManager {
 
     // 좋아요 수 처리
     this.$likeCount.textContent = likeCount;
+
+    // 만약 토글한 위치가 프로필 페이지라면
+    // 프로필 페이지 피드의 전체좋아요 수도 동적으로 바뀌어야 한다.
+    const $gridItem = document.querySelector(`.grid-item[data-post-id="${this.postId}"]`);
+    if ($gridItem) {
+      $gridItem.querySelector('.grid-likes-count').textContent = likeCount;
+    }
+
   }
 
 }
