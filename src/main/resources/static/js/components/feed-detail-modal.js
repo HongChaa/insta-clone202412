@@ -2,6 +2,7 @@
 import { fetchWithAuth } from '../util/api.js';
 import { convertHashtagsToLinks, formatDate } from './feed.js';
 import CarouselManager from '../ui/CarouselManager.js';
+import PostLikeManager from '../ui/PostLikeManager.js';
 
 const $modal = document.querySelector('.post-detail-modal');
 const $backdrop = $modal.querySelector('.modal-backdrop');
@@ -9,12 +10,13 @@ const $closeButton = $modal.querySelector('.modal-close-button');
 const $gridContainer = document.querySelector('.posts-grid');
 
 // 모달에 피드내용 렌더링
-function renderModalContent({ postId, content, createdAt, user, images }) {
+function renderModalContent({ postId, content, createdAt, user, images, likeStatus }) {
 
   // 모달이 렌더링될 때 현재 피드의 id를 모달태그에 발라놓음
   $modal.dataset.postId = postId;
 
   const { username, profileImageUrl } = user;
+  const { liked, likeCount } = likeStatus;
 
   $modal.querySelectorAll('.post-username').forEach(($username) => {
     $username.textContent = username;
@@ -74,6 +76,18 @@ function renderModalContent({ postId, content, createdAt, user, images }) {
     
     carousel.initWithImgTag([...$carouselContainer.querySelectorAll('img')]);
   }
+
+  // 좋아요 렌더링 및 토글 처리
+  const $likeButton = $modal.querySelector('.like-button');
+  const $heartIcon = $modal.querySelector('.like-button i');
+  const $likeCount = $modal.querySelector('.likes-count');
+
+  $likeButton.classList.toggle('liked', liked);
+  $heartIcon.className = liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+  $likeCount.textContent = likeCount;
+
+  // 토글 처리
+  new PostLikeManager($modal);
   
 }
 
@@ -164,7 +178,7 @@ function handleKeyPress(e) {
   if ($modal.style.display === 'none') return;
 
   const currentPostId = $modal.dataset.postId;
-  
+
   const {prevId, nextId} = findAdjacentPostIds(currentPostId);
 
   if (prevId && e.key === 'ArrowLeft') {
