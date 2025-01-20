@@ -78,7 +78,7 @@ function truncateContent(writer, content, maxLength = 20) {
 
 
 // 한개의 피드를 렌더링하는 함수
-function createFeedItem({ feed_id: feedId, username, profileImageUrl, content, images, createdAt, likeStatus }) {
+function createFeedItem({ feed_id: feedId, username, profileImageUrl, content, images, createdAt, likeStatus, commentCount }) {
 
 
   const { liked, likeCount } = likeStatus;
@@ -96,7 +96,9 @@ function createFeedItem({ feed_id: feedId, username, profileImageUrl, content, i
       <div class="post-header">
         <div class="post-user-info">
           <div class="post-profile-image">
-            <img src="${profileImageUrl || '/images/default-profile.svg'}" alt="프로필 이미지">
+            <img src="${
+              profileImageUrl || '/images/default-profile.svg'
+            }" alt="프로필 이미지">
           </div>
           <div class="post-user-details">
             <a href="/${username}" class="post-username">
@@ -182,6 +184,20 @@ function createFeedItem({ feed_id: feedId, username, profileImageUrl, content, i
       </div>
       
       <div class="post-comments">
+
+          <!-- 댓글이 있을 때만 버튼 표시 -->
+          ${
+            commentCount > 0
+              ? `
+            <!-- 댓글 미리보기 -->
+            <div class="comments-preview">
+              <button class="view-comments-button">
+                댓글 ${commentCount}개 모두 보기
+              </button>
+            </div>`
+              : ''
+          }
+
         <form class="comment-form">
           <input type="text" placeholder="댓글 달기..." class="comment-input">
           <button type="submit" class="comment-submit-btn" disabled>게시</button>
