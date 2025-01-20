@@ -2,6 +2,7 @@
 import CarouselManager from "../ui/CarouselManager.js";
 import PostLikeManager from "../ui/PostLikeManager.js";
 import { fetchWithAuth } from "../util/api.js";
+import { createComment } from "./comment.js";
 
 // 피드가 들어갈 전체영역
 const $feedContainer = document.querySelector('.feed-container');
@@ -238,9 +239,10 @@ async function renderFeed() {
 
   });
 
-  // 모든 피드에 좋아요 매니저를 세팅
+  // 모든 피드에 좋아요 매니저를 세팅, 댓글 등록기능을 세팅
   $feedContainer.querySelectorAll('.post').forEach($feed => {
     new PostLikeManager($feed);
+    createComment($feed.querySelector('.comment-form'));
   });
 
 }
