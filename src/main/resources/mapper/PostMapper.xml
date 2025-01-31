@@ -117,7 +117,7 @@
     <select id="findPostsByHashtag" resultType="ProfilePostResponse">
         SELECT
             p.id,
-            pi.image_url           AS thumbnailUrl,
+            pi.image_url           AS mainThumbnail,
             NVL(l.likeCount, 0)    AS likeCount,
             NVL(c.commentCount, 0) AS commentCount
         FROM posts p
