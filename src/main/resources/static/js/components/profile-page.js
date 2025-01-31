@@ -6,6 +6,7 @@ import { getCurrentUser } from '../util/auth.js';
 import initFeedDetailModal from './feed-detail-modal.js';
 import initFollow from './follow.js';
 import initFollowModal from './follow-modal.js';
+import initSearchModal from './search-modal.js';
 
 
 const $profileImageContainer = document.querySelector(
@@ -235,6 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initCreateFeedModal(); // 피드생성 관련 js
   initMoreMenu(); // 더보기 버튼 클릭 관련
   initSideBar(); // 사이드바 관련
+  initSearchModal(); // 검색창 모달
 
   //===== 프로필 페이지 개별 처리 ===== //
   await initProfileHeader(); // 프로필 페이지 헤더 관련
