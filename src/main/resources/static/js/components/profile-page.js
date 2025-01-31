@@ -1,12 +1,9 @@
 import { fetchWithAuth } from '../util/api.js';
-import initCreateFeedModal from './create-feed-modal.js';
-import initMoreMenu from './more-menu.js';
-import initSideBar from './side-bar.js';
+
 import { getCurrentUser } from '../util/auth.js';
-import initFeedDetailModal from './feed-detail-modal.js';
 import initFollow from './follow.js';
 import initFollowModal from './follow-modal.js';
-import initSearchModal from './search-modal.js';
+import initCommon from './common.js';
 
 
 const $profileImageContainer = document.querySelector(
@@ -233,16 +230,12 @@ async function initChangeProfileImage() {
 
 document.addEventListener('DOMContentLoaded', async () => {
   //===== 인덱스페이지와 공통 처리 ==== //
-  initCreateFeedModal(); // 피드생성 관련 js
-  initMoreMenu(); // 더보기 버튼 클릭 관련
-  initSideBar(); // 사이드바 관련
-  initSearchModal(); // 검색창 모달
+  initCommon();
 
   //===== 프로필 페이지 개별 처리 ===== //
   await initProfileHeader(); // 프로필 페이지 헤더 관련
   await initProfileFeeds(); // 프로필 페이지 피드 관련
   await initChangeProfileImage(); // 프사 변경 관련
-  initFeedDetailModal(); // 상세보기 모달 관련
   initFollow(); // 팔로우 처리 관련
   initFollowModal(); // 팔로우 목록 처리
 });
